@@ -1,12 +1,13 @@
-name: 'IIS Service Action'
+name: 'Copy a folder to the remote server'
 
-description: 'This action will start, stop, or restart a target Windows server running the IIS service.'
+description: 'This action will copy a folder from runner to the target Windows server'
 
 inputs:
-  action:
-    description: |
-      Specify start, stop, or restart action to perform
-    default: 'start'
+  sourcefolder:
+    description: 'The source folder to be copied to the remove server'
+    required: true
+  targetfolder:
+    description: 'The target folder on remove server'
     required: true
   server:
     description: 'The name of the target server'
@@ -30,7 +31,8 @@ runs:
         '@
         $secure_password = ConvertTo-SecureString -String $password_string -AsPlainText -Force
         ${{ github.action_path }}/iis_action.ps1 `
-          -action '${{ inputs.action }}'.ToLower() `
+          -sourcefolder '${{ inputs.sourcefolder }}' `
+          -targetfolder '${{ inputs.targetfolder }}' `
           -server '${{ inputs.server }}' `
           -user_id '${{ inputs.service-account-id }}' `
           -password $secure_password
