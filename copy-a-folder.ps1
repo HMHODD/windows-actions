@@ -11,7 +11,7 @@ Param(
     [SecureString]$password
 )
 
-$display_action = 'Transfer'
+$display_action = "Transfer $sourcefolder to server $server as $targetfolder"
 
 Write-Output $display_action
 
@@ -20,3 +20,5 @@ $so = New-PSSessionOption -SkipCACheck -SkipCNCheck -SkipRevocationCheck
 
 $Session = New-PSSession -ComputerName $server -Credential $credential -SessionOption $so
 Copy-Item $sourcefolder -Destination $targetfolder -ToSession $Session -Recurse
+
+Write-Output "Folder transfered."
