@@ -2,7 +2,9 @@ Param(
     [parameter(Mandatory = $true)]
     [string]$sourcefolder,
     [parameter(Mandatory = $true)]
-    [string]$targetzip,
+    [string]$targetfolder,
+    [parameter(Mandatory = $true)]
+    [int]$keepnfiles,
     [parameter(Mandatory = $true)]
     [string]$server,
     [parameter(Mandatory = $true)]
@@ -12,11 +14,13 @@ Param(
 )
 
 $timestamp = Get-Date -Format o | ForEach-Object { $_ -replace ":", "." }
-$targetzipfile = "$targetzip.$timestamp.zip"
+$targetzipfile = "$targetfolder/archive.$timestamp.zip"
 
 $display_action = "Compress $sourcefolder to server $server as $targetzipfile"
 $zip_block = {param($a1, $a2) Compress-Archive -Path $a1 -DestinationPath $a2}
 $rm_block = {param($a1) Remove-Item -Recurse -Force $a1 }
+$current_folder_dir = {param($a1) dir $a1 }
+$after_folder_clean = {param($a1, $a2) Get-ChildItem -Path  "$a1" -Recurse |Where-Object { !$_.PSIsContainer } |Sort-Object LastWriteTime -Descending |Select-Object -Skip $a2 |Remove-Item -Force -Recurse }
 
 Write-Output $display_action
 
@@ -30,4 +34,10 @@ Write-Output ""
 Write-Output "Deleting the source folder $sourcefolder from server $server"
 Invoke-Command -Session $Session -Scriptblock $rm_block -ArgumentList $sourcefolder
 Write-Output "Source folder $sourcefolder deleted."
+Write-Output "Files in folder $targetfolder before rotation"
+Invoke-Command -Session $Session -Scriptblock $current_folder_dir -ArgumentList $targetfolder
+Write-Output ""
+Write-Output "List of files in folder $targetfolder"
+Invoke-Command -Session $Session -Scriptblock $after_folder_clean -ArgumentList $targetfolder,$keepnfiles
+
 
