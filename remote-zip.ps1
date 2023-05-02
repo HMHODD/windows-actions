@@ -37,7 +37,7 @@ Write-Output "Source folder $sourcefolder deleted."
 Write-Output "Files in folder $targetfolder before rotation"
 Invoke-Command -Session $Session -Scriptblock $current_folder_dir -ArgumentList $targetfolder
 Write-Output ""
-Write-Output "List of files in folder $targetfolder"
+Write-Output "Files in folder $targetfolder after rotation"
 Invoke-Command -Session $Session -Scriptblock $after_folder_clean -ArgumentList $targetfolder,$keepnfiles
 
 
