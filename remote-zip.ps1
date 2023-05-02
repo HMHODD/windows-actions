@@ -13,7 +13,7 @@ Param(
     [SecureString]$password
 )
 
-$timestamp = Get-Date -Format o | ForEach-Object { $_ -replace ":", "." }
+$timestamp = Get-Date -Format "yyyyMMddHHmm"
 $targetzipfile = "$targetfolder\archive.$timestamp.zip"
 
 $display_action = "Compress $sourcefolder to server $server as $targetzipfile"
