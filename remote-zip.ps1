@@ -25,7 +25,9 @@ $so = New-PSSessionOption -SkipCACheck -SkipCNCheck -SkipRevocationCheck
 
 $Session = New-PSSession -ComputerName $server -Credential $credential -SessionOption $so
 Invoke-Command -Session $Session -Scriptblock $zip_block -ArgumentList $sourcefolder,$targetzipfile
-Invoke-Command -Session $Session -Scriptblock $rm_block -ArgumentList $sourcefolder
-
 Write-Output "Zip file created."
+Write-Output ""
+Write-Output "Deleting the source folder $sourcefolder from server $server"
+Invoke-Command -Session $Session -Scriptblock $rm_block -ArgumentList $sourcefolder
+Write-Output "Source folder $sourcefolder deleted."
 
