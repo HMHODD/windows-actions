@@ -19,7 +19,7 @@ $targetzipfile = "$targetfolder\archive.$timestamp.zip"
 $display_action = "Compress $sourcefolder to server $server as $targetzipfile"
 $zip_block = {param($a1, $a2) Compress-Archive -Path $a1 -DestinationPath $a2}
 $rm_block = {param($a1) Remove-Item -Recurse -Force $a1 }
-$current_folder_dir = {param($a1) dir $a1 }
+$current_folder_dir = {param($a1) Get-ChildItem -Path  "$a1" -Recurse |Where-Object { !$_.PSIsContainer } |Sort-Object LastWriteTime -Descending }
 $after_folder_clean = {param($a1, $a2) Get-ChildItem -Path  "$a1" -Recurse |Where-Object { !$_.PSIsContainer } |Sort-Object LastWriteTime -Descending |Select-Object -Skip $a2 |Remove-Item -Force -Recurse }
 
 Write-Output $display_action
