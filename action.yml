@@ -1,0 +1,37 @@
+name: 'Remote Windows Machine Script Execution'
+
+description: 'This action connects to an on-premises hosted windows machine and executes a PowerShell script'
+
+inputs:
+  script-path:
+    description: 'The local repository path to the script to be executed on the remote machine'
+    required: true
+  script-arguments:
+    description: 'A pipe delimited string, `|`, that contains the arguments for the script - Example: `arg1|arg2|arg3`'
+    required: false
+  server:
+    description: 'The name of the target server'
+    required: true
+  service-account-id:
+    description: 'The service account name'
+    required: true
+  service-account-password:
+    description: 'The service account password'
+    required: true
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Remote Execution
+      shell: powershell
+      run: |
+        $deployment_password_string = @'
+        ${{ inputs.service-account-password }}
+        '@
+        $secure_password = ConvertTo-SecureString -String $deployment_password_string -AsPlainText -Force
+        ${{ github.action_path }}/remote_action.ps1 `
+          -script_path '${{ inputs.script-path }}' `
+          -script_arguments '${{ inputs.script-arguments }}' `
+          -server '${{ inputs.server }}' `
+          -user_id '${{ inputs.service-account-id }}' `
+          -password $secure_password
