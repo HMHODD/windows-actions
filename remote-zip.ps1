@@ -15,7 +15,7 @@ $timestamp = Get-Date -Format o | ForEach-Object { $_ -replace ":", "." }
 $targetzipfile = "$targetzip.$timestamp.zip"
 
 $display_action = "Compress $sourcefolder to server $server as $targetzipfile"
-$script_block = {Compress-Archive -Path "$sourcefolder" -DestinationPath "$targetzipfile"}
+$script_block = "{Compress-Archive -Path $sourcefolder -DestinationPath $targetzipfile}"
 
 Write-Output $display_action
 
