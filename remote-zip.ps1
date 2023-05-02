@@ -4,6 +4,8 @@ Param(
     [parameter(Mandatory = $true)]
     [string]$targetfolder,
     [parameter(Mandatory = $true)]
+    [string]$buildtag,
+    [parameter(Mandatory = $true)]
     [int]$keepnfiles,
     [parameter(Mandatory = $true)]
     [string]$server,
@@ -14,7 +16,7 @@ Param(
 )
 
 $timestamp = Get-Date -Format "yyyyMMddHHmm"
-$targetzipfile = "$targetfolder\archive.$timestamp.zip"
+$targetzipfile = "$targetfolder\archive.$buildtag.$timestamp.zip"
 
 $display_action = "Compress $sourcefolder to server $server as $targetzipfile"
 $zip_block = {param($a1, $a2) Compress-Archive -Path $a1 -DestinationPath $a2}
