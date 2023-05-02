@@ -32,14 +32,18 @@ $so = New-PSSessionOption -SkipCACheck -SkipCNCheck -SkipRevocationCheck
 $Session = New-PSSession -ComputerName $server -Credential $credential -SessionOption $so
 Invoke-Command -Session $Session -Scriptblock $zip_block -ArgumentList $sourcefolder,$targetzipfile
 Write-Output "Zip file created."
+Write-Output "$(Get-Date)"
 Write-Output ""
 Write-Output "Deleting the source folder $sourcefolder from server $server"
 Invoke-Command -Session $Session -Scriptblock $rm_block -ArgumentList $sourcefolder
 Write-Output "Source folder $sourcefolder deleted."
+Write-Output "$(Get-Date)"
 Write-Output "Files in folder $targetfolder before rotation"
 Invoke-Command -Session $Session -Scriptblock $current_folder_dir -ArgumentList $targetfolder
 Write-Output ""
+Write-Output "$(Get-Date)"
 Invoke-Command -Session $Session -Scriptblock $after_folder_clean -ArgumentList $targetfolder,$keepnfiles
 Write-Output "Files in folder $targetfolder after rotation"
+Write-Output "$(Get-Date)"
 Invoke-Command -Session $Session -Scriptblock $current_folder_dir -ArgumentList $targetfolder
 
