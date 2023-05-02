@@ -6,8 +6,11 @@ inputs:
   sourcefolder:
     description: 'The source folder to be copied to the remove server'
     required: true
-  targetzip:
-    description: 'The target zip file on remove server'
+  targetfolder:
+    description: 'The target zip file folder on remove server'
+    required: true
+  keepnfiles:
+    description: 'Keep number of backups in the archive folder'
     required: true
   server:
     description: 'The name of the target server'
