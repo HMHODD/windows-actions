@@ -28,7 +28,7 @@ Write-Output $display_action
 
 $credential = [PSCredential]::new($user_id, $password)
 $so = New-PSSessionOption -SkipCACheck -SkipCNCheck -SkipRevocationCheck
-
+Write-Output "$(Get-Date)"
 $Session = New-PSSession -ComputerName $server -Credential $credential -SessionOption $so
 Invoke-Command -Session $Session -Scriptblock $zip_block -ArgumentList $sourcefolder,$targetzipfile
 Write-Output "Zip file created."
@@ -44,6 +44,6 @@ Write-Output ""
 Write-Output "$(Get-Date)"
 Invoke-Command -Session $Session -Scriptblock $after_folder_clean -ArgumentList $targetfolder,$keepnfiles
 Write-Output "Files in folder $targetfolder after rotation"
-Write-Output "$(Get-Date)"
 Invoke-Command -Session $Session -Scriptblock $current_folder_dir -ArgumentList $targetfolder
+Write-Output "$(Get-Date)"
 
