@@ -22,6 +22,8 @@ $credential = [PSCredential]::new($user_id, $password)
 $so = New-PSSessionOption -SkipCACheck -SkipCNCheck -SkipRevocationCheck
 
 $Session = New-PSSession -ComputerName $server -Credential $credential -SessionOption $so
-Compress-Archive -Path $sourcefolder -DestinationPath $targetzipfile -ToSession $Session
+Invoke-Command -Session $Session -Scriptblock {Compress-Archive -Path $sourcefolder -DestinationPath $targetzipfile}
+Remove-PSSession $Session
 
 Write-Output "Zip file created."
+
