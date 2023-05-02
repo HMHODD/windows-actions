@@ -24,6 +24,7 @@ $so = New-PSSessionOption -SkipCACheck -SkipCNCheck -SkipRevocationCheck
 
 $Session = New-PSSession -ComputerName $server -Credential $credential -SessionOption $so
 Invoke-Command -Session $Session -Scriptblock $script_block -ArgumentList $sourcefolder,$targetzipfile
+Remove-Item -Recurse -Force $sourcefolder -Session $Session 
 Remove-PSSession $Session
 
 Write-Output "Zip file created."
