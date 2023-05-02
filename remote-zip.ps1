@@ -30,4 +30,5 @@ Write-Output ""
 Write-Output "Deleting the source folder $sourcefolder from server $server"
 Invoke-Command -Session $Session -Scriptblock $rm_block -ArgumentList $sourcefolder
 Write-Output "Source folder $sourcefolder deleted."
+dir $targetzipfile*
 
