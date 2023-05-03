@@ -1,0 +1,26 @@
+name: 'Compress local folder for deployment'
+
+description: 'This action will compress the artifacts folder for deployment'
+
+inputs:
+  sourcefolder:
+    description: 'The source folder to be copied to the remove server'
+    required: true
+  targetfolder:
+    description: 'The target zip file folder on remove server'
+    required: true
+  targetfilename:
+    description: 'zip file name'
+    required: true
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Action
+      id: action
+      shell: powershell
+      run: |
+        ${{ github.action_path }}/zip-local-folder.ps1 `
+          -sourcefolder '${{ inputs.sourcefolder }}' `
+          -targetfolder '${{ inputs.targetfolder }}' `
+          -targetfilename '${{ inputs.targetfilename }}'
