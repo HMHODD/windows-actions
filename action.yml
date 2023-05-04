@@ -1,0 +1,38 @@
+name: 'Copy a file to remote server'
+
+description: 'This action will copy a file from runner to the target Windows server'
+
+inputs:
+  sourcefile:
+    description: 'The source file to be copied to the remove server'
+    required: true
+  targetfolder:
+    description: 'The target folder on remove server'
+    required: true
+  server:
+    description: 'The name of the target server'
+    required: true
+  service-account-id:
+    description: 'The service account name'
+    required: true
+  service-account-password:
+    description: 'The service account password'
+    required: true
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Action
+      id: action
+      shell: powershell
+      run: |
+        $password_string = @'
+        ${{ inputs.service-account-password }}
+        '@
+        $secure_password = ConvertTo-SecureString -String $password_string -AsPlainText -Force
+        ${{ github.action_path }}/copy-a-file.ps1 `
+          -sourcefile '${{ inputs.sourcefile }}' `
+          -targetfolder '${{ inputs.targetfolder }}' `
+          -server '${{ inputs.server }}' `
+          -user_id '${{ inputs.service-account-id }}' `
+          -password $secure_password
