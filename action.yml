@@ -3,7 +3,7 @@ name: 'Copy a folder to the remote server'
 description: 'This action will copy a folder from runner to the target Windows server'
 
 inputs:
-  sourcefile:
+  sourcefolder:
     description: 'The source folder to be copied to the remove server'
     required: true
   targetfolder:
