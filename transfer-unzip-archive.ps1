@@ -39,7 +39,7 @@ Invoke-Command -Session $Session -Scriptblock $empty_target -ArgumentList $targe
 Write-Output ""
 Write-Output " Transfer to $targetfolder"
 Write-Output "$(Get-Date)"
-Copy-Item $filename -Destination $targetfolder -ToSession $Session
+Copy-Item $sourcefolder\$filename -Destination $targetfolder -ToSession $Session
 Write-Output ""
 Write-Output " Unzip $targetfolder\$filename"
 Write-Output "$(Get-Date)"
