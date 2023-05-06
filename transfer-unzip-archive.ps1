@@ -31,30 +31,23 @@ Write-Output $display_action
 
 $credential = [PSCredential]::new($user_id, $password)
 $so = New-PSSessionOption -SkipCACheck -SkipCNCheck -SkipRevocationCheck
-Write-Output "$(Get-Date)"
 $Session = New-PSSession -ComputerName $server -Credential $credential -SessionOption $so
-Write-Output " Empty the target folder $targetfolder"
-Write-Output "$(Get-Date)"
+Write-Output "$(Get-Date) Empty the target folder $targetfolder"
 Invoke-Command -Session $Session -Scriptblock $empty_target -ArgumentList $targetfolder\*
 Write-Output ""
-Write-Output " Transfer to $targetfolder"
-Write-Output "$(Get-Date)"
+Write-Output "$(Get-Date) Transfer to $targetfolder"
 Copy-Item $sourcefolder\$filename -Destination $targetfolder -ToSession $Session
 Write-Output ""
-Write-Output " Unzip $targetfolder\$filename"
-Write-Output "$(Get-Date)"
+Write-Output "$(Get-Date) Unzip $targetfolder\$filename"
 Invoke-Command -Session $Session -Scriptblock $unzip_file -ArgumentList $targetfolder\$filename,$targetfolder
 Write-Output ""
-Write-Output " Move it to $archivefolder"
-Write-Output "$(Get-Date)"
+Write-Output "$(Get-Date) Move it to $archivefolder"
 Invoke-Command -Session $Session -Scriptblock $move_file -ArgumentList $targetfolder\$filename,$archivezipfile
 Write-Output ""
-Write-Output "Files in folder $targetfolder before rotation"
-Write-Output "$(Get-Date)"
+Write-Output "$(Get-Date) Files in folder $targetfolder before rotation"
 Invoke-Command -Session $Session -Scriptblock $current_folder_dir -ArgumentList $archivefolder
 Invoke-Command -Session $Session -Scriptblock $after_folder_clean -ArgumentList $archivefolder,$keepnfiles
-Write-Output ""
-Write-Output "Files in folder $targetfolder after rotation"
-Write-Output "$(Get-Date)"
+Write-Output "$(Get-Date) Files in folder $targetfolder after rotation"
 Invoke-Command -Session $Session -Scriptblock $current_folder_dir -ArgumentList $archivefolder
 Write-Output ""
+Write-Output "File transer, unzip and archive completed"
