@@ -35,7 +35,7 @@ Write-Output "$(Get-Date)"
 $Session = New-PSSession -ComputerName $server -Credential $credential -SessionOption $so
 Write-Output " Empty the target folder $targetfolder"
 Write-Output "$(Get-Date)"
-Invoke-Command -Session $Session -Scriptblock $empty_target -ArgumentList $targetfolder
+Invoke-Command -Session $Session -Scriptblock $empty_target -ArgumentList $targetfolder\*
 Write-Output ""
 Write-Output " Transfer to $targetfolder"
 Write-Output "$(Get-Date)"
