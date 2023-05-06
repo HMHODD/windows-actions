@@ -51,10 +51,10 @@ Invoke-Command -Session $Session -Scriptblock $move_file -ArgumentList $targetfo
 Write-Output ""
 Write-Output "Files in folder $targetfolder before rotation"
 Write-Output "$(Get-Date)"
-Invoke-Command -Session $Session -Scriptblock $current_folder_dir -ArgumentList $targetfolder
-Invoke-Command -Session $Session -Scriptblock $after_folder_clean -ArgumentList $targetfolder,$keepnfiles
+Invoke-Command -Session $Session -Scriptblock $current_folder_dir -ArgumentList $archivefolder
+Invoke-Command -Session $Session -Scriptblock $after_folder_clean -ArgumentList $archivefolder,$keepnfiles
 Write-Output ""
 Write-Output "Files in folder $targetfolder after rotation"
 Write-Output "$(Get-Date)"
-Invoke-Command -Session $Session -Scriptblock $current_folder_dir -ArgumentList $targetfolder
+Invoke-Command -Session $Session -Scriptblock $current_folder_dir -ArgumentList $archivefolder
 Write-Output ""
