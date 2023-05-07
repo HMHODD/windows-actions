@@ -22,7 +22,7 @@
 ...
 
 jobs:
-  stop-iis-service:
+  transfer-unzip-archive:
     runs-on: [windows-2019, self-hosted]
 
     steps:
