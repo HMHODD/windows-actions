@@ -50,4 +50,4 @@ Invoke-Command -Session $Session -Scriptblock $after_folder_clean -ArgumentList 
 Write-Output "$(Get-Date) Files in folder $targetfolder after rotation"
 Invoke-Command -Session $Session -Scriptblock $current_folder_dir -ArgumentList $archivefolder
 Write-Output ""
-Write-Output "File transer, unzip and archive completed"
+Write-Output "File transfer, unzip and archive completed"
