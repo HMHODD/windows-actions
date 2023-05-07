@@ -1,16 +1,16 @@
-name: 'Compress local folder for deployment'
+name: 'Compress the local artifacts folder'
 
 description: 'This action will compress the artifacts folder for deployment'
 
 inputs:
   sourcefolder:
-    description: 'The source folder to be copied to the remove server'
+    description: 'The source folder to be comparessed'
     required: true
   targetfolder:
     description: 'The target zip file folder on remove server'
     required: true
-  targetfilename:
-    description: 'zip file name'
+  zipfilename:
+    description: 'The zip file name'
     required: true
 
 runs:
@@ -23,4 +23,4 @@ runs:
         ${{ github.action_path }}/zip-local-folder.ps1 `
           -sourcefolder '${{ inputs.sourcefolder }}' `
           -targetfolder '${{ inputs.targetfolder }}' `
-          -targetfilename '${{ inputs.targetfilename }}'
+          -zipfilename '${{ inputs.zipfilename }}'

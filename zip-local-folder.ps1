@@ -4,21 +4,18 @@ Param(
     [parameter(Mandatory = $true)]
     [string]$targetfolder,
     [parameter(Mandatory = $true)]
-    [string]$targetfilename
+    [string]$zipfilename
 )
 
-$timestamp = Get-Date -Format "yyyyMMddHHmm"
-$targetzipfile = "$targetfolder\$targetfilename"
+$targetzipfile = "$targetfolder\$zipfilename"
 
 $display_action = "Compress $sourcefolder to $targetzipfile"
 
-Write-Output $display_action
-Write-Output "$(Get-Date)"
-
+Write-Output "$(Get-Date) $display_action"
+Write-Output ""
 Compress-Archive -Path $sourcefolder -DestinationPath $targetzipfile
 
-Write-Output "Zip file created."
-Write-Output "$(Get-Date)"
+Write-Output "$(Get-Date) Zip file created."
 Write-Output ""
 dir $targetzipfile
 
