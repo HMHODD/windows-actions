@@ -7,7 +7,13 @@ Param(
     [string]$zipfilename
 )
 
-$targetzipfile = "$targetfolder\$zipfilename"
+$artifactsfoldr="$targetfolder\artifacts"
+$targetzipfile = "$artifactsfoldr\$zipfilename"
+
+Write-Output "$(Get-Date) Empty artifacts foldr $artifactsfoldr"
+Remove-Item -Recurse -Force $artifactsfoldr
+New-Item -ItemType "directory" -Path $artifactsfoldr
+
 
 $display_action = "Compress $sourcefolder to $targetzipfile"
 
