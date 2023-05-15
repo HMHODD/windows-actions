@@ -11,7 +11,7 @@ $artifactsfoldr="$targetfolder\artifacts"
 $targetzipfile = "$artifactsfoldr\$zipfilename"
 
 Write-Output "$(Get-Date) Empty artifacts foldr $artifactsfoldr"
-Remove-Item -Recurse -Force $artifactsfoldr
+Remove-Item -Recurse -Force $artifactsfoldr -ErrorAction Ignore
 New-Item -ItemType "directory" -Path $artifactsfoldr
 
 
